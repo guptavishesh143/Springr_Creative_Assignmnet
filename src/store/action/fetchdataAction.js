@@ -21,7 +21,7 @@ export const fetchNewsData = () => async (dispatch, getstate) => {
       });
     });
 
-    console.log('DataListDataListDataListDataList', ContentDataList);
+    // console.log('DataListDataListDataListDataList', ContentDataList);
     dispatch({
       type: FETCHDATA,
       payload: {

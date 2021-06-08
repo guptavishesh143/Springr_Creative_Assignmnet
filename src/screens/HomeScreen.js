@@ -37,10 +37,10 @@ const HomeScreen = ({
     });
 
     var DataofNews = NewsData.sources;
-    console.log(
-      'NewsDataNewsDataNewsDataNewsDataNewsData',
-      JSON.stringify(DataofNews),
-    );
+    // console.log(
+    //   'NewsDataNewsDataNewsDataNewsDataNewsData',
+    //   JSON.stringify(DataofNews),
+    // );
     var DataList = [];
     DataofNews.forEach(content => {
       DataList.push({

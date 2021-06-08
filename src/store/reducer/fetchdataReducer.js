@@ -6,13 +6,13 @@ const initialState = {
 };
 export default function (state = initialState, action) {
   const {type, payload} = action;
-
+  console.log('comsolimg action', action);
   switch (type) {
     case FETCHDATA:
       return {
         ...state,
         DataList: payload.DataList,
-        isloading: true,
+        isloading: false,
       };
     default:
       return state;

@@ -12,4 +12,6 @@ const store = createStore(
   applyMiddleware(...middleware),
 );
 
+store.subscribe((state) => console.log('**Reducer state changed', state));
+
 export default store;
