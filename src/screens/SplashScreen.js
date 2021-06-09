@@ -11,14 +11,17 @@ const SplashScreen = ({
   fetchdataReducer: {isloading, DataList},
 }) => {
   useEffect(() => {
-    (async () => {
-      await fetchNewsData();
-   //   console.log(`isloading` + isloading);
-     // console.log('DataList', DataList);
+    setTimeout(() => {
+      navigation.navigate('HomeScreen');
+    }, 2000);
+    // (async () => {
+    //   await fetchNewsData();
+    //  console.log(`isloading` + isloading);
+    //   console.log('DataList', DataList);
     //   setTimeout(() => {
     //     navigation.navigate('HomeScreen');
     //   }, 2000);
-    })();
+    // })();
   }, []);
 
   return (

@@ -22,10 +22,10 @@ const HomeScreen = ({
   fetchdataReducer: {DataList, isloading},
 }) => {
   const [DataRender, setDataRender] = useState([]);
-  const [Loader, setLoader] = useState(true);
+  const [Loader, setLoader] = useState(false);
 
   useEffect(() => {
-    // CallTodayNewApistartIndex();
+     CallTodayNewApistartIndex();
     fetchNewsData();
     console.log('isloading', isloading);
     console.log('DataList', DataList);
@@ -59,7 +59,7 @@ const HomeScreen = ({
   return (
     <>
       <StatusBar animated={true} backgroundColor={'white'} />
-      {Loader == true ? (
+      
         <View
           style={{
             width: '100%',
@@ -124,24 +124,9 @@ const HomeScreen = ({
             />
           </View>
         </View>
-      ) : (
-        <View
-          style={{
-            justifyContent: 'center',
-            alignContent: 'center',
-            height: '100%',
-            width: '100%',
-            backgroundColor: 'white',
-          }}>
-          <Image
-            source={require('../assets/loader.gif')}
-            style={{
-              height: '50%',
-              width: '80%',
-            }}
-          />
-        </View>
-      )}
+      
+  
+    
     </>
   );
 };
@@ -170,3 +155,21 @@ const mapStatetoProps = state => ({
 
 export default connect(mapStatetoProps, {fetchNewsData})(HomeScreen);
 //export default HomeScreen;
+    {/*  (
+        <View
+          style={{
+            justifyContent: 'center',
+            alignContent: 'center',
+            height: '100%',
+            width: '100%',
+            backgroundColor: 'white',
+          }}>
+          <Image
+            source={require('../assets/loader.gif')}
+            style={{
+              height: '50%',
+              width: '80%',
+            }}
+          />
+        </View>
+      ) */}
