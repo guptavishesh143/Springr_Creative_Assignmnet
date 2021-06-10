@@ -1,27 +1,32 @@
 News API Application 
 
-##Followed 
+**Followed** 
 SDLC Model for Developmnet 
 KISS Principle for Code
 
-##Executed with 
+**Executed with **
 1) NORMAL API CALL 
 2) REDUX THUNK
 
 
-##Technologies Used 
+**Technologies Used **
+```
 >Redux Thunk 
 >React Native
 >Redux
+```
 
-##features 
+**features** 
+```
 >Offline Mode Handling
 >Online Mode NEWS API 
 >Share the News URL to Socials 
 >Save Image to Internal Storage
 >GIFS 
+```
 
-##Libraries Used
+**Libraries Used**
+  ```
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-community/netinfo": "^6.0.0",
     "@react-navigation/native": "^5.9.4",
@@ -39,22 +44,26 @@ KISS Principle for Code
     "redux": "^4.1.0",
     "redux-thunk": "^2.3.0",
     "rn-fetch-blob": "^0.12.0"
+  ```
 
 
-##FOR BUILDING THE PROJECT 
+**FOR BUILDING THE PROJECT**
 
-Android
+**Android**
+```
 Step 1: Npm Install 
 Step 2: cd android 
 Step 3: ./gradlew clean 
 step 4: npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/ 
 step 5: Build Apk from Android Studio Build> Build Bundle Apk > Build APK
+```
 
 
-IOS
+**IOS**
+```
 Step 1: Npm Install 
 Step 2: cd ios
 Step 3: pod install
 step 4: react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest
 step 5: Run on Any Simulator
-
+```
