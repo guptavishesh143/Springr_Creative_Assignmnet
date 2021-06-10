@@ -4,24 +4,14 @@ import {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {fetchNewsData} from '../store/action/fetchdataAction';
 
-const SplashScreen = ({
-  navigation,
-  route,
-  fetchNewsData,
-  fetchdataReducer: {isloading, DataList},
-}) => {
+const SplashScreen = ({navigation, route, fetchNewsData, fetchdataReducer}) => {
   useEffect(() => {
-    setTimeout(() => {
-      navigation.navigate('HomeScreen');
-    }, 2000);
-    // (async () => {
-    //   await fetchNewsData();
-    //  console.log(`isloading` + isloading);
-    //   console.log('DataList', DataList);
-    //   setTimeout(() => {
-    //     navigation.navigate('HomeScreen');
-    //   }, 2000);
-    // })();
+    (async () => {
+      await fetchNewsData();
+      setTimeout(() => {
+        navigation.navigate('HomeScreen');
+      }, 3000);
+    })();
   }, []);
 
   return (

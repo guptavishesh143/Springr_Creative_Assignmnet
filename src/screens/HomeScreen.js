@@ -10,8 +10,16 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useState, useEffect} from 'react';
-import {TODAYSNEWS} from '../utils/Config';
-import GetRequest from '../apis/GetRequest';
+
+//Network handling libraries
+import NetInfo from '@react-native-community/netinfo';
+import RNRestart from 'react-native-restart';
+import RNOpenEspecificsSettings from 'react-native-open-especifics-settings';
+
+//Api Request
+// import {TODAYSNEWS} from '../utils/Config';
+// import GetRequest from '../apis/GetRequest';
+
 //Redux
 import {connect} from 'react-redux';
 import {fetchNewsData} from '../store/action/fetchdataAction';
@@ -19,47 +27,116 @@ import {fetchNewsData} from '../store/action/fetchdataAction';
 const HomeScreen = ({
   navigation,
   fetchNewsData,
-  fetchdataReducer: {DataList, isloading},
+  fetchdataReducer: {DataList},
 }) => {
   const [DataRender, setDataRender] = useState([]);
-  const [Loader, setLoader] = useState(false);
+  const [ConwithInternet, setConwithInternet] = useState(false);
 
   useEffect(() => {
-     CallTodayNewApistartIndex();
+    CheckConnStatus();
+    console.log('I am caling again ');
+    //  CallTodayNewApistartIndex();
     fetchNewsData();
-    console.log('isloading', isloading);
-    console.log('DataList', DataList);
   }, []);
 
-  async function CallTodayNewApistartIndex() {
-    const NewsData = await GetRequest(TODAYSNEWS, {
-      // limit: `${startIndex},${endIndex}`,
-    });
+  //Direct Api Call function =============================================
+  // async function CallTodayNewApistartIndex() {
+  //   const NewsData = await GetRequest(TODAYSNEWS, {
+  //   });
 
-    var DataofNews = NewsData.sources;
-    // console.log(
-    //   'NewsDataNewsDataNewsDataNewsDataNewsData',
-    //   JSON.stringify(DataofNews),
-    // );
-    var DataList = [];
-    DataofNews.forEach(content => {
-      DataList.push({
-        id: content.id,
-        description: content.description,
-        url: `${content.url}`,
-        category: content.category,
-        language: `${content.language}`,
-        country: `${content.country}`,
-      });
+  //   var DataofNews = NewsData.sources;
+  //   console.log(
+  //     'NewsDataNewsDataNewsDataNewsDataNewsData',
+  //     JSON.stringify(DataofNews),
+  //   );
+  //   var DataList = [];
+  //   DataofNews.forEach(content => {
+  //     DataList.push({
+  //       id: content.id,
+  //       description: content.description,
+  //       url: `${content.url}`,
+  //       category: content.category,
+  //       language: `${content.language}`,
+  //       country: `${content.country}`,
+  //     });
+  //   });
+  //   setDataRender(DataList);
+  // }
+  //Direct Api Call function =============================================
+
+  //Refreshing the particular screen
+  const onButtonClick = () => {
+    RNRestart.Restart();
+  };
+
+  //Handling the connection status
+  function CheckConnStatus() {
+    NetInfo.fetch().then(state => {
+      console.log('Connection type', state.type);
+      console.log('Is connected?', state.isConnected);
+      if (state.isConnected == true) {
+        setConwithInternet(false);
+      } else {
+        setConwithInternet(true);
+      }
     });
-    setDataRender(DataList);
-    setLoader(false);
+  }
+
+  //Offline content
+  function OfflineContent() {
+    return (
+      <View
+        style={{
+          justifyContent: 'center',
+          alignContent: 'center',
+          height: '100%',
+          width: '100%',
+          backgroundColor: 'white',
+        }}>
+        <Image
+          source={require('../assets/loader.gif')}
+          style={{
+            height: '50%',
+            width: '100%',
+          }}
+        />
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <TouchableOpacity
+            style={{
+              padding: 10,
+              backgroundColor: 'black',
+              justifyContent: 'center',
+            }}
+            activeOpacity={0.7}
+            onPress={() => {
+              onButtonClick();
+            }}>
+            <Text style={{color: 'white'}}>Try Again</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              padding: 10,
+              backgroundColor: 'black',
+              justifyContent: 'center',
+            }}
+            activeOpacity={0.7}
+            onPress={() => {
+              RNOpenEspecificsSettings.openNetwork();
+            }}>
+            <Text style={{color: 'white'}}>Open Wifi Setting</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
   }
 
   return (
     <>
       <StatusBar animated={true} backgroundColor={'white'} />
-      
+
+      {ConwithInternet == true ? (
+        <OfflineContent />
+      ) : (
         <View
           style={{
             width: '100%',
@@ -101,7 +178,7 @@ const HomeScreen = ({
               showsVerticalScrollIndicator={false}
               showsHorizontalScrollIndicator={false}
               scrollEnabled={true}
-              data={DataRender}
+              data={DataList}
               renderItem={({item}) => (
                 <TouchableOpacity
                   style={{paddingBottom: 24}}
@@ -124,9 +201,7 @@ const HomeScreen = ({
             />
           </View>
         </View>
-      
-  
-    
+      )}
     </>
   );
 };
@@ -155,7 +230,8 @@ const mapStatetoProps = state => ({
 
 export default connect(mapStatetoProps, {fetchNewsData})(HomeScreen);
 //export default HomeScreen;
-    {/*  (
+{
+  /*  (
         <View
           style={{
             justifyContent: 'center',
@@ -172,4 +248,5 @@ export default connect(mapStatetoProps, {fetchNewsData})(HomeScreen);
             }}
           />
         </View>
-      ) */}
+      ) */
+}
